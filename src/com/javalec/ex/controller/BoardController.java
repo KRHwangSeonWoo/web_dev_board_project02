@@ -56,14 +56,23 @@ public class BoardController {
 	
 	@GetMapping("/read")
 	public String read(HttpServletRequest request,  @RequestParam("content_idx") int content_idx, @ModelAttribute("contentBean") ContentBean contentBean) {
-		boardService.readInfo(request, content_idx, contentBean);
+		boardService.readInfo(request, content_idx, contentBean, 1);
 		return "board/read";
 	}
 	
 	@GetMapping("/modify")
 	public String modify(HttpServletRequest request,  @RequestParam("content_idx") int content_idx, @ModelAttribute("contentBean") ContentBean contentBean){
-		boardService.readInfo(request, content_idx, contentBean);
+		boardService.readInfo(request, content_idx, contentBean, 1);
 		return "board/modify";
+	}
+	
+	@PostMapping("/modify_pro")
+	public String modify_pro(@Valid @ModelAttribute("contentBean") ContentBean contentBean, @RequestParam("content_idx") int content_idx, BindingResult result, Model model) {
+		if(result.hasErrors()) {
+			return "board/modify";
+		}
+		boardService.modifyInfo(contentBean, content_idx, model);
+		return "board/modify_success";
 	}
 	@GetMapping("/not_right")
 	public String not_right(@RequestParam("content_idx") int content_idx,Model model) {

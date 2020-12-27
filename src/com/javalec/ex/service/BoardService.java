@@ -65,8 +65,10 @@ public void addContentInfo(ContentBean contentBean, Model model) {
 	}
 		
 		
-		public void readInfo(HttpServletRequest request, int content_idx, ContentBean contentBean) {
+		public void readInfo(HttpServletRequest request, int content_idx, ContentBean contentBean, int getRequest) {
+			if(getRequest==1) {
 			request.setAttribute("path_upload", path_upload);
+			}
 			ContentBean tempContentBean=boardDao.readInfo(content_idx);	
 			contentBean.setContent_idx(tempContentBean.getContent_idx());
 			contentBean.setWriter_idx(tempContentBean.getWriter_idx());
@@ -74,7 +76,23 @@ public void addContentInfo(ContentBean contentBean, Model model) {
 			contentBean.setTitle(tempContentBean.getTitle());
 			contentBean.setContent_body(tempContentBean.getContent_body());
 			contentBean.setContent_file(tempContentBean.getContent_file());
+			contentBean.setBoard_idx(tempContentBean.getBoard_idx());
+			System.out.println(contentBean.getBoard_idx());
 		}
 
+		public void modifyInfo(ContentBean contentBean, int content_idx, Model model) {
+			
+			MultipartFile upload_file = contentBean.getUpload_file();
+			
+			if(upload_file.getSize() > 0) {
+				String file_name = uploadFile(upload_file);
+				contentBean.setContent_file(file_name);
+			}
+			ContentBean tempContentBean=new ContentBean();
+			readInfo(null, content_idx, tempContentBean,0);
+			model.addAttribute("board_idx", tempContentBean.getBoard_idx());
+			contentBean.setContent_idx(content_idx);
+			boardDao.modifyInfo(contentBean);
+		}
 	
 }

@@ -30,4 +30,9 @@ public class BoardDao {
 		// TODO Auto-generated method stub
 		return boardMapper.readInfo(content_idx);
 	}
+
+	public void modifyInfo(ContentBean contentBean) {
+		// TODO Auto-generated method stub
+		boardMapper.modifyInfo(contentBean);
+	}
 }
