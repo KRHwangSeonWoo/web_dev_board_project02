@@ -56,23 +56,29 @@ public class BoardController {
 	
 	@GetMapping("/read")
 	public String read(HttpServletRequest request,  @RequestParam("content_idx") int content_idx, @ModelAttribute("contentBean") ContentBean contentBean) {
-		boardService.readInfo(request, content_idx, contentBean, 1);
+		boardService.readInfo(request, content_idx, contentBean);
 		return "board/read";
 	}
 	
 	@GetMapping("/modify")
 	public String modify(HttpServletRequest request,  @RequestParam("content_idx") int content_idx, @ModelAttribute("contentBean") ContentBean contentBean){
-		boardService.readInfo(request, content_idx, contentBean, 1);
+		boardService.readInfo(request, content_idx, contentBean);
 		return "board/modify";
 	}
 	
 	@PostMapping("/modify_pro")
-	public String modify_pro(@Valid @ModelAttribute("contentBean") ContentBean contentBean, @RequestParam("content_idx") int content_idx, BindingResult result, Model model) {
+	public String modify_pro(@Valid @ModelAttribute("contentBean") ContentBean contentBean, @RequestParam("content_idx") int content_idx, BindingResult result, Model model, HttpServletRequest request) {
 		if(result.hasErrors()) {
 			return "board/modify";
 		}
-		boardService.modifyInfo(contentBean, content_idx, model);
+		boardService.modifyInfo(request, contentBean, content_idx, model);
 		return "board/modify_success";
+	}
+	
+	@GetMapping("/delete")
+	public String delete(HttpServletRequest request,Model model) {
+		boardService.delete(request, model);
+		return "board/delete_success";
 	}
 	@GetMapping("/not_right")
 	public String not_right(@RequestParam("content_idx") int content_idx,Model model) {

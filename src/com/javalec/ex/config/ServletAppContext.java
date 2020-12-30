@@ -160,7 +160,7 @@ public class ServletAppContext implements WebMvcConfigurer{
 		
 		CheckRightInterceptor checkRightInterceptor = new CheckRightInterceptor(checkLoginBean);
 		InterceptorRegistration reg3= registry.addInterceptor(checkRightInterceptor);
-		reg3.addPathPatterns("/board/modify");
+		reg3.addPathPatterns("/board/modify", "/board/delete");
 
 	}
 	//StandardServletMultipartResolver빈생성 

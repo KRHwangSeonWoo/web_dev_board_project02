@@ -20,6 +20,10 @@
 							<form:errors path='title' style='color:red' /><br>
 							내용 : <form:textarea path="content_body" rows="10" style="resize:none"/><br>
 							<form:errors path='content_body' style='color:red'/><br>
+							<c:if test="${contentBean.content_file != null }">
+								<img src="${path_upload}/${contentBean.content_file }" width="600"/>	
+							</c:if>	<br/>	
+							
 							첨부이미지 : <form:input type='file' path='upload_file' accept="image/*"/><br>
 								<form:button>작성하기</form:button>				
 					</form:form>

@@ -32,13 +32,13 @@
 	<img src="${path_upload}/${contentBean.content_file }" width="600"/>	
 </c:if>
 
-</table>
+</table><br/>
 
 
 <c:if test="${contentBean.writer_idx == checkLoginBean.user_idx }">
-		<a href="${contextPath }board/modify?content_idx=${contentBean.content_idx}&writer_idx=${contentBean.writer_idx}">정보수정</a>
+		<a href="${contextPath }board/modify?content_idx=${contentBean.content_idx}&writer_idx=${contentBean.writer_idx}">글 수정</a>
+		<a href="${contextPath }board/delete?content_idx=${contentBean.content_idx}&writer_idx=${contentBean.writer_idx}">글 삭제</a>
 </c:if>
-
 
 </body>
 </html>

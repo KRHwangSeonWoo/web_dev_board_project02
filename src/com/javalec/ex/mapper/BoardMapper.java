@@ -2,6 +2,7 @@ package com.javalec.ex.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -29,7 +30,7 @@ public interface BoardMapper {
 			"where content_idx=#{content_idx}")
 	public void modifyInfo(ContentBean contentBean);
 	
-	
-	
+	@Delete("delete content_table where content_idx=#{content_idx}")
+	public void delete(int content_idx);
 
 }

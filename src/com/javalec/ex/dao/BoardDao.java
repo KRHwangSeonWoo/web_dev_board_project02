@@ -35,4 +35,9 @@ public class BoardDao {
 		// TODO Auto-generated method stub
 		boardMapper.modifyInfo(contentBean);
 	}
+
+	public void delete(int content_idx) {
+		// TODO Auto-generated method stub
+		boardMapper.delete(content_idx);
+	}
 }

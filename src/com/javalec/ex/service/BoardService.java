@@ -1,6 +1,8 @@
 package com.javalec.ex.service;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -65,10 +67,9 @@ public void addContentInfo(ContentBean contentBean, Model model) {
 	}
 		
 		
-		public void readInfo(HttpServletRequest request, int content_idx, ContentBean contentBean, int getRequest) {
-			if(getRequest==1) {
+		public void readInfo(HttpServletRequest request, int content_idx, ContentBean contentBean) {
+			
 			request.setAttribute("path_upload", path_upload);
-			}
 			ContentBean tempContentBean=boardDao.readInfo(content_idx);	
 			contentBean.setContent_idx(tempContentBean.getContent_idx());
 			contentBean.setWriter_idx(tempContentBean.getWriter_idx());
@@ -80,19 +81,30 @@ public void addContentInfo(ContentBean contentBean, Model model) {
 			System.out.println(contentBean.getBoard_idx());
 		}
 
-		public void modifyInfo(ContentBean contentBean, int content_idx, Model model) {
+		public void modifyInfo(HttpServletRequest request,ContentBean contentBean, int content_idx, Model model) {
 			
 			MultipartFile upload_file = contentBean.getUpload_file();
-			
+			ContentBean tempContentBean=new ContentBean();
+			readInfo(request, content_idx, tempContentBean);
 			if(upload_file.getSize() > 0) {
 				String file_name = uploadFile(upload_file);
 				contentBean.setContent_file(file_name);
+			}else if(upload_file.getSize() == 0) {
+				contentBean.setContent_file(tempContentBean.getContent_file());
 			}
-			ContentBean tempContentBean=new ContentBean();
-			readInfo(null, content_idx, tempContentBean,0);
 			model.addAttribute("board_idx", tempContentBean.getBoard_idx());
 			contentBean.setContent_idx(content_idx);
 			boardDao.modifyInfo(contentBean);
+		}
+
+
+		public void delete(HttpServletRequest request, Model model) {
+			
+			int content_idx=Integer.parseInt(request.getParameter("content_idx"));
+			ContentBean tempContentBean=new ContentBean();
+			readInfo(request, content_idx, tempContentBean);
+			model.addAttribute("board_idx", tempContentBean.getBoard_idx());
+			boardDao.delete(content_idx);
 		}
 	
 }
