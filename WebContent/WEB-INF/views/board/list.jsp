@@ -23,12 +23,14 @@
 					</tr>
 		</thead>
 		<tbody>
-					<c:forEach var='obj' items="${list_info }">
+					<%int i=1; %>
+					<c:forEach var='obj' items="${list_info }" >
 					<tr>
-						<td>${obj.content_idx }</td>
+						<td><%=i %></td>
 						<td><a href='${contextPath }board/read?content_idx=${obj.content_idx}'>${obj.title }</a></td>
 						<td>${obj.writer_id }</td>
 						<td>${obj.content_date }</td>
+						<%i++; %>
 					</tr>
 					</c:forEach>
 					
